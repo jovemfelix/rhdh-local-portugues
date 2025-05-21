@@ -28,15 +28,6 @@ Para usar o RHDH Local, você precisará de alguns itens:
 1. (_Opcional_) A ferramenta node `npx` (se desejar usar a autenticação do GitHub no RHDH)
 1. (_Opcional_) Uma [conta Red Hat](https://access.redhat.com/RegistryAuthentication#getting-a-red-hat-login-2) (se desejar usar um banco de dados PostgreSQL)
 
-### Observação para usuários de Mac M1
-
-- Se você estiver usando um Mac Apple Silicon (M1/M2), a imagem RHDH padrão (`quay.io/rhdh/rhdh-hub-rhel9:1.4`) **não** é compatível com a arquitetura ARM64.
-- Para corrigir isso, você pode adicionar esta linha ao seu arquivo `.env` (crie o arquivo se ele não existir):
-
-`RHDH_IMAGE=quay.io/rhdh-community/rhdh:next`
-
-- Esta imagem suporta `amd64` e `arm64`.
-
 ## Introdução ao RHDH Local
 
 1. Clone este repositório para um local no seu PC
@@ -45,15 +36,24 @@ Para usar o RHDH Local, você precisará de alguns itens:
    git clone https://github.com/redhat-developer/rhdh-local.git
    ```
 
-1. Vá para a pasta `rhdh-local`.
+2. Vá para a pasta `rhdh-local`.
 
    ```sh
    cd rhdh-local
    ```
+3. Se Usuários de Mac M1
 
-1. (_Opcional_) Você pode criar um arquivo local `.env` e substituir qualquer uma das variáveis padrão definidas no arquivo [`default.env`](./default.env) fornecido. Você também pode adicionar variáveis adicionais. Na maioria dos casos, quando você **não** precisa do GitHub Auth ou de testar versões diferentes, pode pular esta etapa, e deve funcionar.
+    > **ATENÇÃO**: Usuários de Mac Apple Silicon (M1/M2)
+    > - Se você estiver usando um Mac Apple Silicon (M1/M2), a imagem RHDH padrão (`quay.io/rhdh/rhdh-hub-rhel9:1.4`) **não** é compatível com a arquitetura ARM64.
+    > - Para corrigir isso, você pode adicionar esta linha ao seu arquivo `.env` (crie o arquivo se ele não existir):
 
-1. (_Opcional_) Faça a substituição da configuração local. O RHDH Local suporta substituições de configuração específicas do usuário usando um diretório estruturado `configs/`. Você **não** precisa modificar os arquivos padrão. No entanto, se quiser personalizar sua configuração:
+   ```sh
+   echo 'RHDH_IMAGE=quay.io/rhdh-community/rhdh:next' >> .env 
+   ```
+- Esta imagem suporta `amd64` e `arm64`.
+4. (_Opcional_) Você pode criar um arquivo local `.env` e substituir qualquer uma das variáveis padrão definidas no arquivo [`default.env`](./default.env) fornecido. Você também pode adicionar variáveis adicionais. Na maioria dos casos, quando você **não** precisa do GitHub Auth ou de testar versões diferentes, pode pular esta etapa, e deve funcionar.
+
+5. (_Opcional_) Faça a substituição da configuração local. O RHDH Local suporta substituições de configuração específicas do usuário usando um diretório estruturado `configs/`. Você **não** precisa modificar os arquivos padrão. No entanto, se quiser personalizar sua configuração:
 
    - Adicione as substituições de configuração do seu aplicativo a: `configs/app-config/app-config.local.yaml`
       > Você pode usar os arquivos `.example.yaml` incluídos para começar rapidamente:
@@ -79,7 +79,7 @@ Para usar o RHDH Local, você precisará de alguns itens:
    Se precisar de recursos que busquem arquivos do GitHub, configure `integrations.github`.
    A maneira recomendada é usar o GitHub Apps. Você pode encontrar dicas sobre como configurá-lo em [github-app-credentials.example.yaml](configs/github-app-credentials.example.yaml) ou instruções mais detalhadas na [documentação do Backstage](https://backstage.io/docs/integrations/github/github-apps).
 
-2. Inicie o RHDH Local.
+6. Inicie o RHDH Local.
    Este repositório deve funcionar com `docker compose` usando o Docker Engine ou `podman-compose` usando o Podman. Ao usar o Podman, há algumas exceções. Consulte [Problemas conhecidos ao usar o Podman Compose](#known-issues-when-using-podman-compose) para mais informações.
 
    ```sh
@@ -92,7 +92,7 @@ Para usar o RHDH Local, você precisará de alguns itens:
    docker compose up -d
    ```
 
-3. Abra [http://localhost:7007](http://localhost:7007) no seu navegador para acessar o RHDH.
+7. Abra [http://localhost:7007](http://localhost:7007) no seu navegador para acessar o RHDH.
 
 ## Alterando sua configuração
 
